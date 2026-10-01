@@ -65,3 +65,5 @@ fakePop = ['rishi', 'rivyb', 'kkkkk']
 
 #print(initPop)
 print(fitFunc(target, initPop))
+
+#final
