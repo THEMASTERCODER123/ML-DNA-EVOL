@@ -65,5 +65,13 @@ fakePop = ['rishi', 'rivyb', 'kkkkk']
 
 #print(initPop)
 print(fitFunc(target, initPop))
+print(max(fitFunc(target, initPop)))
+
+cout = 0
+while max(fitFunc(target, initPop)) != len(target):
+    print(fitFunc(target, initPop))
+    print(max(fitFunc(target, initPop)))
+    cout += 1
+    print(f'No of iterations is {cout}')
 
 #final
