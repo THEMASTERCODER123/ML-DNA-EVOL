@@ -62,8 +62,6 @@ target = str(input("Target: ")) #str you want to predict
 initPop = genPop(10000, len(target))
 
 
-
-#print(initPop)
 g = fitFunc(target, initPop)
 print(g)
 f = max(g)
