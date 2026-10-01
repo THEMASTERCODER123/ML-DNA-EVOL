@@ -61,11 +61,8 @@ target = str(input("Target: ")) #str you want to predict
 
 initPop = genPop(10000, len(target))
 
-
 g = fitFunc(target, initPop)
-print(g)
 f = max(g)
-print(f)
 print(f'Index of max fitness is: {g.index(f)}')
 print(f'The max fit individual is: {initPop[g.index(f)]}')
 
