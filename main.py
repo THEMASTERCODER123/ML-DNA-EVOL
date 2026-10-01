@@ -61,7 +61,7 @@ target = str(input("Target: ")) #str you want to predict
 
 initPop = genPop(10000, len(target))
 
-#fakePop = ['rishi', 'rivyb', 'kkkkk']
+fakePop = ['rishi', 'rivyb', 'kkkkk']
 
 #print(initPop)
 print(fitFunc(target, initPop))
