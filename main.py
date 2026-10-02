@@ -124,6 +124,16 @@ def topPopProbabilistic(currentPop, currentFitness):
 
     return newTopPop
 
+def cross(topPop, method):
+    if method == "5050":
+        return 0
+    elif method == "genAll":
+        for i in topPop:
+            for j in i:
+                for g in j:
+                    
+
+
 
 target = str(input("Target: ")) #str you want to predict
 
