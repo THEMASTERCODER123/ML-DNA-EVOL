@@ -124,13 +124,19 @@ def topPopProbabilistic(currentPop, currentFitness):
 
     return newTopPop
 
-def cross(topPop, method):
+def cross(currentTopPop, method):
+    tl1 = []
+
     if method == "5050":
         return 0
     elif method == "genAll":
-        for i in topPop:
-            for j in i:
-                for g in j:
+        for i in currentTopPop: #['pjrwi', 'rymeo']
+            for j in i: #'pjrwi'
+                for g in j: # 'p'
+                    tl1.append(g)
+                
+    return tl1
+
                     
 
 
@@ -140,8 +146,9 @@ target = str(input("Target: ")) #str you want to predict
 initPop = genPop(100, len(target))
 initFitness = fitFunc(target, initPop)
 initTopPop = topPopProbabilistic(initPop, initFitness)
+initCross = cross(initTopPop, "genAll")
 
-print(initTopPop)
+print(initCross)
 
 
 '''
