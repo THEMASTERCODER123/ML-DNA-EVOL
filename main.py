@@ -228,43 +228,43 @@ def selectPopProbabilistic(currentPop, currentFitness, selectionSize):
     return newPop
 
 
-target = str(input("Target: ")) #str you want to predict
+def run():
+    target = str(input("Target: ")) #str you want to predict
 
-selection_size_init = 1000
-selection_size_reduction = 1000 #ssi>=ssr
-initPop = genPop(selection_size_init, len(target))
-currentPop = initPop
-generation = 0
-mutation_rate=0.01
+    selection_size_init = 1000
+    selection_size_reduction = 1000 #ssi>=ssr
+    initPop = genPop(selection_size_init, len(target))
+    currentPop = initPop
+    generation = 0
+    mutation_rate=0.01
+    while True:
+        currentFitness = fitFunc(target, currentPop)
+        currentTopPop = topPopProbabilistic1(currentPop, currentFitness)
 
+        crossedPop = cross(currentTopPop, "genAll")
+        mutatedPop = mutatePop(crossedPop, mutation_rate)
 
-while True:
-    currentFitness = fitFunc(target, currentPop)
-    currentTopPop = topPopProbabilistic1(currentPop, currentFitness)
+        mutatedFitness = fitFunc(target, mutatedPop)
+        currentPop = selectPopProbabilistic(mutatedPop, mutatedFitness, selection_size_reduction)
 
-    crossedPop = cross(currentTopPop, "genAll")
-    mutatedPop = mutatePop(crossedPop, mutation_rate)
-
-    mutatedFitness = fitFunc(target, mutatedPop)
-    currentPop = selectPopProbabilistic(mutatedPop, mutatedFitness, selection_size_reduction)
-
-    for i in currentPop:
-        print("Generation:", generation, "Individual:", i)
-        if i == target:
+        for i in currentPop:
+            print("Generation:", generation, "Individual:", i)
+            if i == target:
+                break
+        x = checkTarget(currentPop, target)
+        if x == True:
             break
-    x = checkTarget(currentPop, target)
-    if x == True:
-        break
-    generation += 1
+        generation += 1
 
-
-
-'''initPop = genPop(10000, len(target))
-initFitness = fitFunc(target, initPop)
-initTopPop = topPopProbabilistic1(initPop, initFitness)
-initCross = cross(initTopPop, "genAll")'''
+if __name__ == '__main__':
+    run()
 
 '''
+initPop = genPop(10000, len(target))
+initFitness = fitFunc(target, initPop)
+initTopPop = topPopProbabilistic1(initPop, initFitness)
+initCross = cross(initTopPop, "genAll")
+    ---------------------------------------------------------------------------------------
     Testing:-
     fakePop = ['rishi', 'rivyb', 'kkkkk']
     ---------------------------------------------------------------------------------------
