@@ -338,35 +338,4 @@ def run():
 if __name__ == '__main__':
     run()
 
-'''
-    ---------------------------------------------------------------------------------------
-initPop = genPop(10000, len(target))
-initFitness = fitFunc(target, initPop)
-initTopPop = topPopProbabilistic1(initPop, initFitness)
-initCross = cross(initTopPop, "genAll")
-    ---------------------------------------------------------------------------------------
-    Testing:-
-    fakePop = ['rishi', 'rivyb', 'kkkkk']
-    ---------------------------------------------------------------------------------------
-
-    #To check for no. of iterations before generation of target (in init population)
-
-    cout = 0
-    while max(fitFunc(target, initPop)) != len(target):
-        print(fitFunc(target, initPop))
-        print(max(fitFunc(target, initPop)))
-        cout += 1
-        print(f'No of iterations is {cout}')
-    ---------------------------------------------------------------------------------------
-
-    #to check for max fit individual
-
-    g = fitFunc(target, initPop)
-    f = max(g)
-    print(f'Fitness: {f}')
-    print(f'Relative Fitness: {f/len(target)}')
-    print(f'Index of max fitness is: {g.index(f)}')
-    print(f'The max fit individual is: {initPop[g.index(f)]}')
-    ---------------------------------------------------------------------------------------
-'''
 
