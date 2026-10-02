@@ -229,13 +229,45 @@ def selectPopProbabilistic(currentPop, currentFitness, selectionSize):
 
 def run():
     #target = str(input("Target: ")) #str you want to predict
-    target="hello world"
+    target="lllllllll llllllllll"
     selection_size_init = 1000
     selection_size_reduction = 1000 #ssi>=ssr
     initPop = genPop(selection_size_init, len(target))
     currentPop = initPop
     generation = 1
-    mutation_rate=0.0000001
+
+    if len(target) < 5:
+        mul_const = 15
+    elif len(target) < 10:
+        mul_const = 10
+    elif len(target) < 15:
+        mul_const = 7
+    elif len(target) < 20:
+        mul_const = 5
+    elif len(target) < 30:
+        mul_const = 4
+    elif len(target) < 40:
+        mul_const = 3
+    elif len(target) < 50:
+        mul_const = 2.5
+    elif len(target) < 60:
+        mul_const = 2
+    elif len(target) < 75:
+        mul_const = 1.5
+    elif len(target) < 100:
+        mul_const = 1.25
+    elif len(target) < 150:
+        mul_const = 1
+    elif len(target) < 250:
+        mul_const = 0.8
+    elif len(target) < 500:
+        mul_const = 0.6
+    else:
+        mul_const = 0.5
+
+    mutation_rate=1/(mul_const*len(target))
+    #mutation_rate = 0.005
+
     noOfIndiv = 1
     while True:
         currentFitness = fitFunc(target, currentPop)
