@@ -145,22 +145,19 @@ def topPopProbabilistic1(currentPop, currentFitness):
 
 
 def cross(currentTopPop, method):
-    tl1 = []
     tl = []
+    pl=[]
 
     if method == "5050":
         return 0
     elif method == "genAll":
-        for i in currentTopPop: #['pjrwi', 'rymeo']
-            for j in i: #'pjrwi'
-                for g in j: # 'p'
-                    tl1.append(g)
-                tl.append(tl1) #[['p','j','r','w','i'],['r','y',...],[...],...]
-                tl1.clear()
-                
+        for pair in currentTopPop: # 'pair' looks like ['rishi', 'rivyb']
+                parent1 = list(pair[0]) # Result: ['r', 'i', 's', 'h', 'i']
+                parent2 = list(pair[1]) # Result: ['r', 'i', 'v', 'y', 'b']
+                tl.append([parent1, parent2])
     return tl
 
-                    
+
 
 
 
@@ -171,7 +168,7 @@ initFitness = fitFunc(target, initPop)
 initTopPop = topPopProbabilistic1(initPop, initFitness)
 initCross = cross(initTopPop, "genAll")
 
-print(initTopPop)
+print(initCross)
 
 
 '''
