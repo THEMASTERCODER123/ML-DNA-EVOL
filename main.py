@@ -171,19 +171,23 @@ def checkTarget(population, target):
         return False
 
 
-
-
-
-
-
 target = str(input("Target: ")) #str you want to predict
 
 
 initPop = genPop(1000, len(target))
+currentPop = initPop
 generation = 0
 
-while not checkTarget(population, target):
-    fitFunc()
+while True:
+    currentFitness = fitFunc(target, currentPop)
+    currentTopPop = topPopProbabilistic1(currentPop, currentFitness)
+    cross(currentTopPop, "genAll")
+    x = checkTarget(currentTopPop, target)
+    if x == True:
+        break
+    generation += 1
+
+
 
 '''
 initPop = genPop(10000, len(target))
