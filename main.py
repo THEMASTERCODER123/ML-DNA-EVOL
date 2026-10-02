@@ -59,7 +59,6 @@ def fitFunc(trgt, pop):
 
     return fitness
 
-#Survival OF the Fittest (top 50% of Current Generation)
 def topPopElitist(currentPop, currentFitness):
     hash_fitness = dict(zip(currentPop, currentFitness))
     sorted_hash_fitness = dict(sorted(hash_fitness.items(), key=lambda item: item[1]))
@@ -104,25 +103,26 @@ def topPopProbabilistic(currentPop, currentFitness):
 
     newTopPop = []
     if len(currentPop)%2==0:
-        for i in range(0,len(currentPop)/2):
+        for i in range(len(currentPop)//2):
             currentTopPop = random.choices(
                 values,
                 weights=newProbabilities,
                 k=2
             )
-        newTopPop.append(currentTopPop)
+            newTopPop.append(currentTopPop)
+        
+
     else:
-        for i in range(0,(len(currentPop)+1)/2):
+        for i in range((len(currentPop)+1)//2):
             currentTopPop = random.choices(
                 values,
                 weights=newProbabilities,
                 k=2
             )
-        newTopPop.append(currentTopPop)
+            newTopPop.append(currentTopPop)
 
 
     return newTopPop
-
 
 
 target = str(input("Target: ")) #str you want to predict
