@@ -59,22 +59,29 @@ def fitFunc(trgt, pop):
 
 target = str(input("Target: ")) #str you want to predict
 
-initPop = genPop(10000, len(target))
+initPop = genPop(100, len(target))
+initFitness = fitFunc(target, initPop)
 
-g = fitFunc(target, initPop)
-f = max(g)
-print(f'Index of max fitness is: {g.index(f)}')
-print(f'The max fit individual is: {initPop[g.index(f)]}')
+
 
 
 '''
-Testing:-
-fakePop = ['rishi', 'rivyb', 'kkkkk']
-
-cout = 0
-while max(fitFunc(target, initPop)) != len(target):
-    print(fitFunc(target, initPop))
-    print(max(fitFunc(target, initPop)))
-    cout += 1
-    print(f'No of iterations is {cout}')'''
+    Testing:-
+    fakePop = ['rishi', 'rivyb', 'kkkkk']
+    ---------------------------------------------------------------------------------------
+    cout = 0
+    while max(fitFunc(target, initPop)) != len(target):
+        print(fitFunc(target, initPop))
+        print(max(fitFunc(target, initPop)))
+        cout += 1
+        print(f'No of iterations is {cout}')
+    ---------------------------------------------------------------------------------------
+    g = fitFunc(target, initPop)
+    f = max(g)
+    print(f'Fitness: {f}')
+    print(f'Relative Fitness: {f/len(target)}')
+    print(f'Index of max fitness is: {g.index(f)}')
+    print(f'The max fit individual is: {initPop[g.index(f)]}')
+    ---------------------------------------------------------------------------------------
+    '''
 
