@@ -86,22 +86,15 @@ def fitFunc(trgt, pop, presentBonus):
             if i == tlist[idx]:
                 tempFitness += 1
             idx += 1
-#-----------------------------------------------
         remainingTarget = Counter(trgt)
-
         for i in tempList:
             if remainingTarget[i] > 0:
                 tempFitness += presentBonus
-                remainingTarget[i] -= 1
-#-----------------------------------------------
-        
+                remainingTarget[i] -= 1    
         fitness.append(tempFitness)
         tempFitness=0
         idx = 0
         tempList=[]
-    
-    
-
     return fitness
 
 def topPopElitist(currentPop, currentFitness):
