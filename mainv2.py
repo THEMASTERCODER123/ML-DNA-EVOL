@@ -8,14 +8,30 @@ def genRandWord(length):
     for i in range(length):
         x.append(random.choices(chars, k=length))
 
-def randomCharacter():
-	character = random.choice(string.ascii_lowercase + " ")
-	return character
+def randomCharacter(typeStr):
+    if typeStr == "lower":
+	    character = random.choice(string.ascii_lowercase + " ")
+	    return character
+    elif typeStr == "upper":
+        character = random.choice(string.ascii_uppercase + " ")
+        return character
+    elif typeStr == "letters":
+        character = random.choice(string.ascii_letters + " ")
+        return character
+    elif typeStr == "digts":
+        character = random.choice(string.digits + " ")
+        return character
+    elif typeStr == "punctuations":
+        character = random.choice(string.punctuation + " ")
+        return character
+    else:
+        character = random.choice(string.ascii_letters + string.digits + string.punctuation + " ")
+        return character
 
 def is_even(number):
     return number % 2 == 0
 
-def genPop(n,lenWord):
+def genPop(n,lenWord,typeStr):
     x = []
     y = []
     z = []
@@ -24,7 +40,7 @@ def genPop(n,lenWord):
     #n = int(input("No. of Words?:  ")) #population
     a = ''
 
-    chars = string.ascii_lowercase + " "
+    chars = randomCharacter(typeStr)
 
     for i in range(n):
         x.append(random.choices(chars, k=lenWord))
@@ -200,7 +216,7 @@ def checkTarget(population, target):
         return False
     print("Generation: ", generation)
 
-def mutatePop(currentPop, mutationRate):
+def mutatePop(currentPop, mutationRate, typeStr):
     mutatedPop = []
 
     for i in currentPop:
@@ -208,7 +224,7 @@ def mutatePop(currentPop, mutationRate):
 
         for j in range(len(word)):
             if random.random() < mutationRate:
-                word[j] = randomCharacter()
+                word[j] = randomCharacter(typeStr)
 
         mutatedPop.append(''.join(word))
 
@@ -239,12 +255,14 @@ def selectPopProbabilistic(currentPop, currentFitness, selectionSize):
 def run():
     target = str(input("Target: ")) #str you want to predict
     #target="a"
+    typeStr = "letters"
     selection_size_init = 1000
     selection_size_reduction = 1000 #ssi>=ssr
-    initPop = genPop(selection_size_init, len(target))
+    initPop = genPop(selection_size_init, len(target), typeStr)
     currentPop = initPop
     generation = 1
     maxAttempts = 10
+    
 
     if len(target) < 5:
         mul_const = 15
@@ -289,7 +307,7 @@ def run():
         currentTopPop = topPopProbabilistic1(currentPop, currentFitness, maxAttempts)
 
         crossedPop = cross(currentTopPop, "genAll")
-        mutatedPop = mutatePop(crossedPop, mutation_rate)
+        mutatedPop = mutatePop(crossedPop, mutation_rate, typeStr)
 
         mutatedFitness = fitFunc(target, mutatedPop)
         currentPop = selectPopProbabilistic(mutatedPop, mutatedFitness, selection_size_reduction)
