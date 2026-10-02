@@ -155,15 +155,20 @@ def cross(currentTopPop, method):
                 parent1 = list(pair[0]) # Result: ['r', 'i', 's', 'h', 'i']
                 parent2 = list(pair[1]) # Result: ['r', 'i', 'v', 'y', 'b']
                 tl.append([parent1, parent2])
-    return tl
+    words=[]
+    for pair in tl:
+        for i in range(len(pair[0]) - 1):
+            word = pair[0][:i + 1] + pair[1][i:-1]
+            words.append(''.join(word))
 
+    return words, len(words)
 
 
 
 
 target = str(input("Target: ")) #str you want to predict
 
-initPop = genPop(100, len(target))
+initPop = genPop(10000, len(target))
 initFitness = fitFunc(target, initPop)
 initTopPop = topPopProbabilistic1(initPop, initFitness)
 initCross = cross(initTopPop, "genAll")
