@@ -1,13 +1,11 @@
 import string
 import random
 from collections import Counter
-
 def genRandWord(length):
     x = ''
     chars = string.ascii_letters + " "
     for i in range(length):
         x.append(random.choices(chars, k=length))
-
 def randomCharacter(typeStr):
     if typeStr == "lower":
 	    character = random.choice(string.ascii_lowercase + " ")
@@ -27,7 +25,6 @@ def randomCharacter(typeStr):
     else:
         character = random.choice(string.ascii_letters + string.digits + string.punctuation + " ")
         return character
-
 def is_even(number):
     return number % 2 == 0
     x = []
@@ -56,7 +53,6 @@ def is_even(number):
         del y[0:lenWord]
 
     return z
-
 def genPop(n, lenWord, typeStr):
     population = []
     for i in range(n):
@@ -65,7 +61,6 @@ def genPop(n, lenWord, typeStr):
             word += randomCharacter(typeStr)
         population.append(word)
     return population
-
 def fitFunc(trgt, pop, presentBonus):
 
     tlist = []
@@ -95,7 +90,6 @@ def fitFunc(trgt, pop, presentBonus):
         idx = 0
         tempList=[]
     return fitness
-
 def topPopElitist(currentPop, currentFitness):
     hash_fitness = dict(zip(currentPop, currentFitness))
     sorted_hash_fitness = dict(sorted(hash_fitness.items(), key=lambda item: item[1]))
@@ -114,7 +108,6 @@ def topPopElitist(currentPop, currentFitness):
         del sorted_hash_fitness[key]
 
     return sorted_hash_fitness
-
 def topPopProbabilistic1(currentPop, currentFitness, maxAttempts):
     #hash_fitness = dict(zip(currentPop, currentFitness))
     #sorted_hash_fitness = dict(sorted(hash_fitness.items(), key=lambda item: item[1]))
@@ -194,7 +187,6 @@ def topPopProbabilistic1(currentPop, currentFitness, maxAttempts):
 
 
     return newTopPop
-
 def cross(currentTopPop, method):
     tl = []
     pl=[]
@@ -219,14 +211,12 @@ def cross(currentTopPop, method):
                 words.append(''.join(word))
 
     return words
-
 def checkTarget(population, target):
     if target in population:
         return True
     else:
         return False
     print("Generation: ", generation)
-
 def mutatePop(currentPop, mutationRate, typeStr):
     mutatedPop = []
 
@@ -240,7 +230,6 @@ def mutatePop(currentPop, mutationRate, typeStr):
         mutatedPop.append(''.join(word))
 
     return mutatedPop
-
 def selectPopProbabilistic(currentPop, currentFitness, selectionSize):
     totalFitness = 0
 
@@ -262,7 +251,6 @@ def selectPopProbabilistic(currentPop, currentFitness, selectionSize):
     )
 
     return newPop
-
 def run():
     target = str(input("Target: ")) #str you want to predict
     #target="a"
@@ -334,7 +322,6 @@ def run():
         if x == True:
             break
         generation += 1
-
 if __name__ == '__main__':
     run()
 
