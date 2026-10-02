@@ -259,16 +259,10 @@ while True:
 
 
 
-'''
-initPop = genPop(10000, len(target))
+'''initPop = genPop(10000, len(target))
 initFitness = fitFunc(target, initPop)
 initTopPop = topPopProbabilistic1(initPop, initFitness)
 initCross = cross(initTopPop, "genAll")'''
-
-
-
-#print(initCross)
-
 
 '''
     Testing:-
