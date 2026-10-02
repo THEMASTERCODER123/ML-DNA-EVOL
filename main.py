@@ -249,7 +249,7 @@ def run():
 
         for i in currentPop:
             #print("Generation:", generation, "Individual:", i)
-            print(f'Generation:{generation} Individual#{noOfIndiv}: {i}')
+            print(f'Generation #{generation}====Individual #{noOfIndiv}:--->{i}\n')
             noOfIndiv += 1
             
             if i == target:
