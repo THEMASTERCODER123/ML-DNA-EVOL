@@ -126,6 +126,7 @@ def topPopProbabilistic(currentPop, currentFitness):
 
 def cross(currentTopPop, method):
     tl1 = []
+    tl = []
 
     if method == "5050":
         return 0
@@ -134,8 +135,11 @@ def cross(currentTopPop, method):
             for j in i: #'pjrwi'
                 for g in j: # 'p'
                     tl1.append(g)
+                tl.append(tl1) #[['p','j','r','w','i'],['r','y',...],[...],...]
+            tl1.clear()
                 
-    return tl1
+                
+    return tl
 
                     
 
