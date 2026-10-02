@@ -1,4 +1,3 @@
-#By Rishi Dharewa
 import string
 import random
 from collections import Counter
