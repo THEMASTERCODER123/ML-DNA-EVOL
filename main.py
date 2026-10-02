@@ -2,6 +2,16 @@
 import string
 import random
 
+def genRandWord(length):
+    x = ''
+    chars = string.ascii_letters + " "
+    for i in range(length):
+        x.append(random.choices(chars, k=length))
+
+def randomCharacter():
+	character = random.choice(string.ascii_lowercase + " ")
+	return character
+
 def is_even(number):
     return number % 2 == 0
 
@@ -83,11 +93,21 @@ def topPopProbabilistic1(currentPop, currentFitness):
     #sorted_hash_fitness = dict(sorted(hash_fitness.items(), key=lambda item: item[1]))
     #fitness_values_list = list(hash_fitness.values())
     totalFitness = 0
+    
     for i in currentFitness:
         totalFitness += int(i)
 
     if totalFitness == 0:
-        totalFitness = 1
+        newTopPop = []
+
+        for i in range(len(currentPop) // 2):
+
+            currentTopPop = random.sample(currentPop, k=2)
+
+            newTopPop.append(currentTopPop)
+
+        return newTopPop
+
     
     normalizedFitness = []
 
@@ -159,30 +179,80 @@ def cross(currentTopPop, method):
 
     for pair in tl:
         for i in range(len(pair[0]) - 1):
-            word = pair[0][:i + 1] + pair[1][i:-1]
+            word = pair[0][:i + 1] + pair[1][i+1:]
             words.append(''.join(word))
 
-    return words, len(words)
+    return words
 
 def checkTarget(population, target):
     if target in population:
         return True
     else:
         return False
+    print("Generation: ", generation)
+
+def mutatePop(currentPop, mutationRate):
+    mutatedPop = []
+
+    for i in currentPop:
+        word = list(i)
+
+        for j in range(len(word)):
+            if random.random() < mutationRate:
+                word[j] = randomCharacter()
+
+        mutatedPop.append(''.join(word))
+
+    return mutatedPop
+
+def selectPopProbabilistic(currentPop, currentFitness, selectionSize):
+    totalFitness = 0
+
+    for i in currentFitness:
+        totalFitness += int(i)
+
+    if totalFitness == 0:
+        return random.choices(currentPop, k=selectionSize)
+
+    normalizedFitness = []
+
+    for i in currentFitness:
+        normalizedFitness.append(i / totalFitness)
+
+    newPop = random.choices(
+        currentPop,
+        weights=normalizedFitness,
+        k=selectionSize
+    )
+
+    return newPop
 
 
 target = str(input("Target: ")) #str you want to predict
 
-
-initPop = genPop(1000, len(target))
+selection_size_init = 1000
+selection_size_reduction = 1000 #ssi>=ssr
+initPop = genPop(selection_size_init, len(target))
 currentPop = initPop
 generation = 0
+mutation_rate=0.01
+
 
 while True:
     currentFitness = fitFunc(target, currentPop)
     currentTopPop = topPopProbabilistic1(currentPop, currentFitness)
-    cross(currentTopPop, "genAll")
-    x = checkTarget(currentTopPop, target)
+
+    crossedPop = cross(currentTopPop, "genAll")
+    mutatedPop = mutatePop(crossedPop, mutation_rate)
+
+    mutatedFitness = fitFunc(target, mutatedPop)
+    currentPop = selectPopProbabilistic(mutatedPop, mutatedFitness, selection_size_reduction)
+
+    for i in currentPop:
+        print("Generation:", generation, "Individual:", i)
+        if i == target:
+            break
+    x = checkTarget(currentPop, target)
     if x == True:
         break
     generation += 1
@@ -197,7 +267,7 @@ initCross = cross(initTopPop, "genAll")'''
 
 
 
-print(initCross)
+#print(initCross)
 
 
 '''
