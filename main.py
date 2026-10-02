@@ -62,13 +62,16 @@ target = str(input("Target: ")) #str you want to predict
 initPop = genPop(100, len(target))
 initFitness = fitFunc(target, initPop)
 
-
+print(initFitness)
 
 
 '''
     Testing:-
     fakePop = ['rishi', 'rivyb', 'kkkkk']
     ---------------------------------------------------------------------------------------
+
+    #To check for no. of iterations before generation of target (in init population)
+
     cout = 0
     while max(fitFunc(target, initPop)) != len(target):
         print(fitFunc(target, initPop))
@@ -76,6 +79,9 @@ initFitness = fitFunc(target, initPop)
         cout += 1
         print(f'No of iterations is {cout}')
     ---------------------------------------------------------------------------------------
+
+    #to check for max fit individual
+
     g = fitFunc(target, initPop)
     f = max(g)
     print(f'Fitness: {f}')
@@ -83,5 +89,5 @@ initFitness = fitFunc(target, initPop)
     print(f'Index of max fitness is: {g.index(f)}')
     print(f'The max fit individual is: {initPop[g.index(f)]}')
     ---------------------------------------------------------------------------------------
-    '''
+'''
 
