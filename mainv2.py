@@ -30,8 +30,6 @@ def randomCharacter(typeStr):
 
 def is_even(number):
     return number % 2 == 0
-
-def genPop(n,lenWord,typeStr):
     x = []
     y = []
     z = []
@@ -58,6 +56,15 @@ def genPop(n,lenWord,typeStr):
         del y[0:lenWord]
 
     return z
+
+def genPop(n, lenWord, typeStr):
+    population = []
+    for i in range(n):
+        word = ''
+        for j in range(lenWord):
+            word += randomCharacter(typeStr)
+        population.append(word)
+    return population
 
 def fitFunc(trgt, pop):
 
@@ -255,7 +262,7 @@ def selectPopProbabilistic(currentPop, currentFitness, selectionSize):
 def run():
     target = str(input("Target: ")) #str you want to predict
     #target="a"
-    typeStr = "letters"
+    typeStr = "lower"
     selection_size_init = 1000
     selection_size_reduction = 1000 #ssi>=ssr
     initPop = genPop(selection_size_init, len(target), typeStr)
