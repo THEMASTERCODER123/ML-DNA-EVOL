@@ -60,7 +60,7 @@ def fitFunc(trgt, pop):
     return fitness
 
 #Survival OF the Fittest (top 50% of Current Generation)
-def SOTF(currentPop, currentFitness):
+def topPopElitist(currentPop, currentFitness):
     hash_fitness = dict(zip(currentPop, currentFitness))
     sorted_hash_fitness = dict(sorted(hash_fitness.items(), key=lambda item: item[1]))
 
@@ -79,14 +79,59 @@ def SOTF(currentPop, currentFitness):
 
     return sorted_hash_fitness
 
+def topPopProbabilistic(currentPop, currentFitness):
+    #hash_fitness = dict(zip(currentPop, currentFitness))
+    #sorted_hash_fitness = dict(sorted(hash_fitness.items(), key=lambda item: item[1]))
+    #fitness_values_list = list(hash_fitness.values())
+    totalFitness = 0
+    for i in currentFitness:
+        totalFitness += int(i)
+    
+    normalizedFitness = []
+
+    for i in currentFitness:
+        normalizedFitness.append(i/totalFitness)
+
+    hash_normalized_fitness = dict(zip(currentPop, normalizedFitness))
+
+    probabilities = list(hash_normalized_fitness.values())
+    values = list(hash_normalized_fitness.keys())
+    
+    newProbabilities = []
+
+    for i in probabilities:
+        newProbabilities.append(float(i))
+
+    newTopPop = []
+    if len(currentPop)%2==0:
+        for i in range(0,len(currentPop)/2):
+            currentTopPop = random.choices(
+                values,
+                weights=newProbabilities,
+                k=2
+            )
+        newTopPop.append(currentTopPop)
+    else:
+        for i in range(0,(len(currentPop)+1)/2):
+            currentTopPop = random.choices(
+                values,
+                weights=newProbabilities,
+                k=2
+            )
+        newTopPop.append(currentTopPop)
+
+
+    return newTopPop
+
+
 
 target = str(input("Target: ")) #str you want to predict
 
 initPop = genPop(100, len(target))
 initFitness = fitFunc(target, initPop)
-initSOTF = SOTF(initPop, initFitness)
+initTopPop = topPopProbabilistic(initPop, initFitness)
 
-print(initSOTF)
+print(initTopPop)
 
 
 '''
