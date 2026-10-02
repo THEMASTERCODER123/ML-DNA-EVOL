@@ -1,7 +1,6 @@
 import string
 import random
 
-
 def genPop(n,lenWord):
     x = []
     y = []
