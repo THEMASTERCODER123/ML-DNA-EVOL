@@ -227,16 +227,16 @@ def selectPopProbabilistic(currentPop, currentFitness, selectionSize):
 
     return newPop
 
-
 def run():
-    target = str(input("Target: ")) #str you want to predict
-
+    #target = str(input("Target: ")) #str you want to predict
+    target="hello world"
     selection_size_init = 1000
     selection_size_reduction = 1000 #ssi>=ssr
     initPop = genPop(selection_size_init, len(target))
     currentPop = initPop
-    generation = 0
-    mutation_rate=0.01
+    generation = 1
+    mutation_rate=0.0000001
+    noOfIndiv = 1
     while True:
         currentFitness = fitFunc(target, currentPop)
         currentTopPop = topPopProbabilistic1(currentPop, currentFitness)
@@ -248,7 +248,10 @@ def run():
         currentPop = selectPopProbabilistic(mutatedPop, mutatedFitness, selection_size_reduction)
 
         for i in currentPop:
-            print("Generation:", generation, "Individual:", i)
+            #print("Generation:", generation, "Individual:", i)
+            print(f'Generation:{generation} Individual#{noOfIndiv}: {i}')
+            noOfIndiv += 1
+            
             if i == target:
                 break
         x = checkTarget(currentPop, target)
