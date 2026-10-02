@@ -78,51 +78,71 @@ def topPopElitist(currentPop, currentFitness):
 
     return sorted_hash_fitness
 
-def topPopProbabilistic(currentPop, currentFitness):
+def topPopProbabilistic1(currentPop, currentFitness):
     #hash_fitness = dict(zip(currentPop, currentFitness))
     #sorted_hash_fitness = dict(sorted(hash_fitness.items(), key=lambda item: item[1]))
     #fitness_values_list = list(hash_fitness.values())
     totalFitness = 0
     for i in currentFitness:
         totalFitness += int(i)
+
+    if totalFitness == 0:
+        totalFitness = 1
     
     normalizedFitness = []
 
     for i in currentFitness:
         normalizedFitness.append(i/totalFitness)
 
-    hash_normalized_fitness = dict(zip(currentPop, normalizedFitness))
+    #hash_normalized_fitness = dict(zip(currentPop, normalizedFitness))
 
-    probabilities = list(hash_normalized_fitness.values())
-    values = list(hash_normalized_fitness.keys())
+    #probabilities = list(hash_normalized_fitness.values())
+    #values = list(hash_normalized_fitness.keys())
     
+    values = currentPop
+    probabilities = normalizedFitness
+
     newProbabilities = []
 
-    for i in probabilities:
-        newProbabilities.append(float(i))
+    '''for i in probabilities:
+        newProbabilities.append(float(i))'''
 
     newTopPop = []
     if len(currentPop)%2==0:
         for i in range(len(currentPop)//2):
             currentTopPop = random.choices(
                 values,
-                weights=newProbabilities,
+                weights=probabilities,
                 k=2
             )
+
+            while currentTopPop[0] == currentTopPop[1]:
+                currentTopPop = random.choices(
+                values,
+                weights=probabilities,
+                k=2
+            )
+
             newTopPop.append(currentTopPop)
         
-
     else:
         for i in range((len(currentPop)+1)//2):
             currentTopPop = random.choices(
                 values,
-                weights=newProbabilities,
+                weights=probabilities,
+                k=2
+            )
+            while currentTopPop[0] == currentTopPop[1]:
+                currentTopPop = random.choices(
+                values,
+                weights=probabilities,
                 k=2
             )
             newTopPop.append(currentTopPop)
 
 
     return newTopPop
+
 
 def cross(currentTopPop, method):
     tl1 = []
@@ -136,8 +156,7 @@ def cross(currentTopPop, method):
                 for g in j: # 'p'
                     tl1.append(g)
                 tl.append(tl1) #[['p','j','r','w','i'],['r','y',...],[...],...]
-            tl1.clear()
-                
+                tl1.clear()
                 
     return tl
 
@@ -149,10 +168,10 @@ target = str(input("Target: ")) #str you want to predict
 
 initPop = genPop(100, len(target))
 initFitness = fitFunc(target, initPop)
-initTopPop = topPopProbabilistic(initPop, initFitness)
+initTopPop = topPopProbabilistic1(initPop, initFitness)
 initCross = cross(initTopPop, "genAll")
 
-print(initCross)
+print(initTopPop)
 
 
 '''
