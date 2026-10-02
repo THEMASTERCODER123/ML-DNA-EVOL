@@ -56,13 +56,19 @@ def fitFunc(trgt, pop):
 
     return fitness
 
+#Survival OF the Fittest (top 50% of Current Generation)
+def SOTF(currentPop, currentFitness):
+    hash_fitness = dict(zip(currentPop, currentFitness))
+    sorted_hash_fitness = dict(sorted(hash_fitness.items(), key=lambda item: item[1]))
+    return sorted_hash_fitness
 
 target = str(input("Target: ")) #str you want to predict
 
-initPop = genPop(100, len(target))
+initPop = genPop(1000, len(target))
 initFitness = fitFunc(target, initPop)
+initSOTF = SOTF(initPop, initFitness)
 
-print(initFitness)
+print(initSOTF)
 
 
 '''
