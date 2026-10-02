@@ -2,6 +2,9 @@
 import string
 import random
 
+def is_even(number):
+    return number % 2 == 0
+
 def genPop(n,lenWord):
     x = []
     y = []
@@ -60,11 +63,26 @@ def fitFunc(trgt, pop):
 def SOTF(currentPop, currentFitness):
     hash_fitness = dict(zip(currentPop, currentFitness))
     sorted_hash_fitness = dict(sorted(hash_fitness.items(), key=lambda item: item[1]))
+
+    if is_even(len(sorted_hash_fitness)) == True:
+        midpoint_idx = (len(sorted_hash_fitness))/2 #where top 50% starts
+    #elif is_even(len(sorted_hash_fitness)) == False:
+    else:
+        midpoint_idx = ((len(sorted_hash_fitness)+1)/2)-1 #where top 50% starts
+    
+    target_idx = int(midpoint_idx - 1)
+
+    keys_to_remove = list(sorted_hash_fitness.keys())[:target_idx + 1]
+
+    for key in keys_to_remove:
+        del sorted_hash_fitness[key]
+
     return sorted_hash_fitness
+
 
 target = str(input("Target: ")) #str you want to predict
 
-initPop = genPop(1000, len(target))
+initPop = genPop(100, len(target))
 initFitness = fitFunc(target, initPop)
 initSOTF = SOTF(initPop, initFitness)
 
