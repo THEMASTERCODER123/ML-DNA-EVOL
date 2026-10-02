@@ -88,7 +88,7 @@ def topPopElitist(currentPop, currentFitness):
 
     return sorted_hash_fitness
 
-def topPopProbabilistic1(currentPop, currentFitness):
+def topPopProbabilistic1(currentPop, currentFitness, maxAttempts):
     #hash_fitness = dict(zip(currentPop, currentFitness))
     #sorted_hash_fitness = dict(sorted(hash_fitness.items(), key=lambda item: item[1]))
     #fitness_values_list = list(hash_fitness.values())
@@ -126,7 +126,7 @@ def topPopProbabilistic1(currentPop, currentFitness):
 
     '''for i in probabilities:
         newProbabilities.append(float(i))'''
-
+    
     newTopPop = []
     if len(currentPop)%2==0:
         for i in range(len(currentPop)//2):
@@ -135,13 +135,14 @@ def topPopProbabilistic1(currentPop, currentFitness):
                 weights=probabilities,
                 k=2
             )
-
-            while currentTopPop[0] == currentTopPop[1]:
+            attempts =0
+            while currentTopPop[0] == currentTopPop[1] and attempts<maxAttempts:
                 currentTopPop = random.choices(
                 values,
                 weights=probabilities,
                 k=2
             )
+                attempts+=1
 
             newTopPop.append(currentTopPop)
         
@@ -152,12 +153,16 @@ def topPopProbabilistic1(currentPop, currentFitness):
                 weights=probabilities,
                 k=2
             )
-            while currentTopPop[0] == currentTopPop[1]:
+            attempts =0
+            while currentTopPop[0] == currentTopPop[1] and attempts < maxAttempts:
                 currentTopPop = random.choices(
                 values,
                 weights=probabilities,
                 k=2
             )
+                attempts += 1
+
+
             newTopPop.append(currentTopPop)
 
 
@@ -178,9 +183,13 @@ def cross(currentTopPop, method):
     words=[]
 
     for pair in tl:
-        for i in range(len(pair[0]) - 1):
-            word = pair[0][:i + 1] + pair[1][i+1:]
-            words.append(''.join(word))
+        if len(pair[0]) == 1:
+            words.append(''.join(pair[0]))
+            words.append(''.join(pair[1]))
+        else:
+            for i in range(len(pair[0]) - 1):
+                word = pair[0][:i + 1] + pair[1][i+1:]
+                words.append(''.join(word))
 
     return words
 
@@ -229,12 +238,13 @@ def selectPopProbabilistic(currentPop, currentFitness, selectionSize):
 
 def run():
     target = str(input("Target: ")) #str you want to predict
-    #target=""
+    #target="a"
     selection_size_init = 1000
     selection_size_reduction = 1000 #ssi>=ssr
     initPop = genPop(selection_size_init, len(target))
     currentPop = initPop
     generation = 1
+    maxAttempts = 10
 
     if len(target) < 5:
         mul_const = 15
@@ -270,8 +280,13 @@ def run():
 
     noOfIndiv = 1
     while True:
+        x = checkTarget(currentPop, target)
+        if x == True:
+            if generation == 1:
+                print(f'Target Reached: {target}, it was present in the first population.')
+                break
         currentFitness = fitFunc(target, currentPop)
-        currentTopPop = topPopProbabilistic1(currentPop, currentFitness)
+        currentTopPop = topPopProbabilistic1(currentPop, currentFitness, maxAttempts)
 
         crossedPop = cross(currentTopPop, "genAll")
         mutatedPop = mutatePop(crossedPop, mutation_rate)
@@ -295,6 +310,7 @@ if __name__ == '__main__':
     run()
 
 '''
+    ---------------------------------------------------------------------------------------
 initPop = genPop(10000, len(target))
 initFitness = fitFunc(target, initPop)
 initTopPop = topPopProbabilistic1(initPop, initFitness)
